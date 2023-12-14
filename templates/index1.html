@@ -1,0 +1,1028 @@
+
+<!DOCTYPE html>
+<html>
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+
+<head>
+  <meta charset="UTF-8">
+  <title>POC Fraud Detection</title>
+</head>
+
+<body>
+  <div class="formbold-main-wrapper">
+    <div class="formbold-form-wrapper">
+      <div class="formbold-form-title">
+        <h2  class="h2">POC Fraud Detection</h2>
+        <p>
+          Fill out the insurance claim details to detect Insurance Fraud
+        </p>
+      </div>
+      <form action="http://127.0.0.1:5000/predict" method="POST">
+          <div class="formbold-steps">
+              <ul>
+                  <li class="formbold-step-menu1 active">
+                      <span>1</span>
+                      Beneficiary Details
+                  </li>
+                  <li class="formbold-step-menu2">
+                      <span>2</span>
+                      Patient Data
+                  </li>
+                  <li class="formbold-step-menu3">
+                      <span>3</span>
+                      Prediction
+                  </li>
+              </ul>
+          </div>
+          <div class="formbold-form-step-1 active">
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="BeneID" class="formbold-form-label">Beneficiary ID</label>
+                    <input
+                        type="text"
+                        name="BeneID"
+                        value="BENE11007"
+                        placeholder="Enter Beneficiary ID"
+                        id="BeneID"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="DOB" class="formbold-form-label">Date of Birth</label>
+                    <input
+                        type="text"
+                        name="DOB"
+                        value="01/09/1940"
+                        placeholder="dd/mm/yy"
+                        id="DOB"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="DOD" class="formbold-form-label">Date of Death</label>
+                    <input
+                        type="text"
+                        name="DOD"
+                        value="01/12/2009"
+                        placeholder="dd/mm/yy"
+                        id="DOD"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="Gender" class="formbold-form-label">Gender</label>
+                    <input
+                        type="text"
+                        name="Gender"
+                        value="male"
+                        placeholder="Enter Gender"
+                        id="Gender"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="Race" class="formbold-form-label">Race</label>
+                    <input
+                        type="text"
+                        name="Race"
+                        value="1"
+                        placeholder="Enter Race"
+                        id="Race"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="RenalDiseaseIndicator" class="formbold-form-label">Renal Disease Indicator</label>
+                    <input
+                        type="text"
+                        name="RenalDiseaseIndicator"
+                        value="No"
+                        placeholder="Enter Renal Disease Indicator"
+                        id="RenalDiseaseIndicator"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+            </div>
+        
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="State" class="formbold-form-label">State</label>
+                    <input
+                        type="text"
+                        name="State"
+                        value="California"
+                        placeholder="Enter State code"
+                        id="State"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="County" class="formbold-form-label">Country</label>
+                    <input
+                        type="text"
+                        name="County"
+                        placeholder="Enter Country code"
+                        value="United States"
+                        id="County"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="NoOfMonths_PartACov" class="formbold-form-label">No of Months Part A Coverage</label>
+                    <input
+                        type="text"
+                        name="NoOfMonths_PartACov"
+                        value="12"
+                        placeholder="Enter Number of Months Part A Coverage"
+                        id="NoOfMonths_PartACov"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="NoOfMonths_PartBCov" class="formbold-form-label">No of Months Part B Coverage</label>
+                    <input
+                        type="text"
+                        name="NoOfMonths_PartBCov"
+                        value="12"
+                        placeholder="Enter Number of Months Part B Coverage"
+                        id="NoOfMonths_PartBCov"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_Alzheimer" class="formbold-form-label">Chronic Condition: Alzheimer</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_Alzheimer"
+                        value="Yes"
+                        placeholder="Enter Chronic Condition: Alzheimer"
+                        id="ChronicCond_Alzheimer"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_Heartfailure" class="formbold-form-label">Chronic Condition: Heart Failure</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_Heartfailure"
+                        value="No"
+                        placeholder="Enter Chronic Condition: Heart Failure"
+                        id="ChronicCond_Heartfailure"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+            </div>
+        
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="ChronicCond_KidneyDisease" class="formbold-form-label">Chronic Condition: Kidney Disease</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_KidneyDisease"
+                        value="Yes"
+                        placeholder="Enter Chronic Condition: Kidney Disease"
+                        id="ChronicCond_KidneyDisease"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_Cancer" class="formbold-form-label">Chronic Condition: Cancer</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_Cancer"
+                        value="Yes"
+                        placeholder="Enter Chronic Condition: Cancer"
+                        id="ChronicCond_Cancer"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_ObstrPulmonary" class="formbold-form-label">Chronic Condition: Pulmonary</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_ObstrPulmonary"
+                        value="No"
+                        placeholder="Enter Chronic Condition: Obstructive Pulmonary"
+                        id="ChronicCond_ObstrPulmonary"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_Depression" class="formbold-form-label">Chronic Condition: Depression</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_Depression"
+                        value="No"
+                        placeholder="Enter Chronic Condition: Depression"
+                        id="ChronicCond_Depression"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_Diabetes" class="formbold-form-label">Chronic Condition: Diabetes</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_Diabetes"
+                        value="No"
+                        placeholder="Enter Chronic Condition: Diabetes"
+                        id="ChronicCond_Diabetes"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_IschemicHeart" class="formbold-form-label">Chronic Condition: Ischemic Heart</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_IschemicHeart"
+                        value="Yes"
+                        placeholder="Enter Chronic Condition: Ischemic Heart"
+                        id="ChronicCond_IschemicHeart"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+            </div>
+        
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="ChronicCond_Osteoporasis" class="formbold-form-label">Chronic Condition: Osteoporosis</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_Osteoporasis"
+                        value="No"
+                        placeholder="Enter Chronic Condition: Osteoporosis"
+                        id="ChronicCond_Osteoporasis"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_rheumatoidarthritis" class="formbold-form-label">Chronic Condition: Arthritis</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_rheumatoidarthritis"
+                        value="Yes"
+                        placeholder="Enter Chronic Condition: Rheumatoid Arthritis"
+                        id="ChronicCond_rheumatoidarthritis"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="ChronicCond_stroke" class="formbold-form-label">Chronic Condition: Stroke</label>
+                    <input
+                        type="text"
+                        name="ChronicCond_stroke"
+                        value="No"
+                        placeholder="Enter Chronic Condition: Stroke"
+                        id="ChronicCond_stroke"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="IPAnnualReimbursementAmt" class="formbold-form-label">Inpatient Annual Reimbursement</label>
+                    <input
+                        type="text"
+                        name="IPAnnualReimbursementAmt"
+                        value="0"
+                        placeholder="Enter Inpatient Annual Reimbursement Amount"
+                        id="IPAnnualReimbursementAmt"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="IPAnnualDeductibleAmt" class="formbold-form-label">Inpatient Annual Deductible</label>
+                    <input
+                        type="text"
+                        name="IPAnnualDeductibleAmt"
+                        value="0"
+                        placeholder="Enter Inpatient Annual Deductible Amount"
+                        id="IPAnnualDeductibleAmt"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+                <div>
+                    <label for="OPAnnualReimbursementAmt" class="formbold-form-label">Outpatient Annual Reimbursement</label>
+                    <input
+                        type="text"
+                        name="OPAnnualReimbursementAmt"
+                        value="1490$"
+                        placeholder="Enter Outpatient Annual Reimbursement Amount"
+                        id="OPAnnualReimbursementAmt"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+            </div>
+        
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="OPAnnualDeductibleAmt" class="formbold-form-label">Outpatient Annual Deductible</label>
+                    <input
+                        type="text"
+                        name="OPAnnualDeductibleAmt"
+                        value="160$"
+                        placeholder="Enter Outpatient Annual Deductible Amount"
+                        id="OPAnnualDeductibleAmt"
+                        class="formbold-form-input"
+                        required
+                    />
+                </div>
+            </div>
+        </div>
+        
+  
+         <div class="formbold-form-step-2">
+    <div class="formbold-input-flex">
+        <div>
+            <label for="ClaimID" class="formbold-form-label">Claim ID</label>
+            <input
+                type="text"
+                name="ClaimID"
+                value="CLM31237"
+                placeholder="Enter Claim ID"
+                id="ClaimID"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClaimStartDt" class="formbold-form-label">Claim Start Date</label>
+            <input
+                type="text"
+                name="ClaimStartDt"
+                value="25/12/2008"
+                placeholder="Enter Claim Start Date"
+                id="ClaimStartDt"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClaimEndDt" class="formbold-form-label">Claim End Date</label>
+            <input
+                type="text"
+                name="ClaimEndDt"
+                value="08/01/2009"
+                placeholder="Enter Claim End Date"
+                id="ClaimEndDt"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="Provider" class="formbold-form-label">Provider</label>
+            <input
+                type="text"
+                name="Provider"
+                value="PRV54750"
+                placeholder="Enter Provider"
+                id="Provider"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="InscClaimAmtReimbursed" class="formbold-form-label">Insurance Claim Amount Reimbursed</label>
+            <input
+                type="text"
+                name="InscClaimAmtReimbursed"
+                value="14000$"
+                placeholder="Enter Insurance Claim Amount Reimbursed"
+                id="InscClaimAmtReimbursed"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="AttendingPhysician" class="formbold-form-label">Attending Physician</label>
+            <input
+                type="text"
+                name="AttendingPhysician"
+                value="PHY314656"
+                placeholder="Enter Attending Physician"
+                id="AttendingPhysician"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="OperatingPhysician" class="formbold-form-label">Operating Physician</label>
+            <input
+                type="text"
+                name="OperatingPhysician"
+                value="PHY426644"
+                placeholder="Enter Operating Physician"
+                id="OperatingPhysician"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="OtherPhysician" class="formbold-form-label">Other Physician</label>
+            <input
+                type="text"
+                name="OtherPhysician"
+                value="NA"
+                placeholder="Enter Other Physician"
+                id="OtherPhysician"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="AdmissionDt" class="formbold-form-label">Admission Date</label>
+            <input
+                type="text"
+                name="AdmissionDt"
+                value="25/12/2008"
+                placeholder="Enter Admission Date"
+                id="AdmissionDt"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClmAdmitDiagnosisCode" class="formbold-form-label">Claim Admit Diagnosis Code</label>
+            <input
+                type="text"
+                name="ClmAdmitDiagnosisCode"
+                value="5939"
+                placeholder="Enter Claim Admit Diagnosis Code"
+                id="ClmAdmitDiagnosisCode"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="DeductibleAmtPaid" class="formbold-form-label">Deductible Amount Paid</label>
+            <input
+                type="text"
+                name="DeductibleAmtPaid"
+                value="1068$"
+                placeholder="Enter Deductible Amount Paid"
+                id="DeductibleAmtPaid"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="DischargeDt" class="formbold-form-label">Discharge Date</label>
+            <input
+                type="text"
+                name="DischargeDt"
+                value="08/01/2009"
+                placeholder="Enter Discharge Date"
+                id="DischargeDt"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="DiagnosisGroupCode" class="formbold-form-label">Diagnosis Group Code</label>
+            <input
+                type="text"
+                name="DiagnosisGroupCode"
+                value="661"
+                placeholder="Enter Diagnosis Group Code"
+                id="DiagnosisGroupCode"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="ClmDiagnosisCode_1" class="formbold-form-label">Claim Diagnosis Code 1</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_1"
+                value="1889"
+                placeholder="Enter Claim Diagnosis Code 1"
+                id="ClmDiagnosisCode_1"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClmDiagnosisCode_2" class="formbold-form-label">Claim Diagnosis Code 2</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_2"
+                value="41071"
+                placeholder="Enter Claim Diagnosis Code 2"
+                id="ClmDiagnosisCode_2"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClmDiagnosisCode_3" class="formbold-form-label">Claim Diagnosis Code 3</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_3"
+                value="5990"
+                placeholder="Enter Claim Diagnosis Code 3"
+                id="ClmDiagnosisCode_3"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="ClmDiagnosisCode_4" class="formbold-form-label">Claim Diagnosis Code 4</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_4"
+                value="5601"
+                placeholder="Enter Claim Diagnosis Code 4"
+                id="ClmDiagnosisCode_4"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClmDiagnosisCode_5" class="formbold-form-label">Claim Diagnosis Code 5</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_5"
+                value="4588"
+                placeholder="Enter Claim Diagnosis Code 5"
+                id="ClmDiagnosisCode_5"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClmDiagnosisCode_6" class="formbold-form-label">Claim Diagnosis Code 6</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_6"
+                value="5845"
+                placeholder="Enter Claim Diagnosis Code 6"
+                id="ClmDiagnosisCode_6"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="ClmDiagnosisCode_7" class="formbold-form-label">Claim Diagnosis Code 7</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_7"
+                value="4549"
+                placeholder="Enter Claim Diagnosis Code 7"
+                id="ClmDiagnosisCode_7"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClmDiagnosisCode_8" class="formbold-form-label">Claim Diagnosis Code 8</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_8"
+                value="29570"
+                placeholder="Enter Claim Diagnosis Code 8"
+                id="ClmDiagnosisCode_8"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClmDiagnosisCode_9" class="formbold-form-label">Claim Diagnosis Code 9</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_9"
+                value="34831"
+                placeholder="Enter Claim Diagnosis Code 9"
+                id="ClmDiagnosisCode_9"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="ClmDiagnosisCode_10" class="formbold-form-label">Claim Diagnosis Code 10</label>
+            <input
+                type="text"
+                name="ClmDiagnosisCode_10"
+                value="NA"
+                placeholder="Enter Claim Diagnosis Code 10"
+                id="ClmDiagnosisCode_10"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="formbold-input-flex">
+        <div>
+            <label for="ClmProcedureCode_1" class="formbold-form-label">Claim Procedure Code 1</label>
+            <input
+                type="text"
+                name="ClmProcedureCode_1"
+                value="5551"
+                placeholder="Enter Claim Procedure Code 1"
+                id="ClmProcedureCode_1"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+        <div>
+            <label for="ClmProcedureCode_2" class="formbold-form-label">Claim Procedure Code 2</label>
+            <input
+                type="text"
+                name="ClmProcedureCode_2"
+                value="NA"
+                placeholder="Enter Claim Procedure Code 2"
+                id="ClmProcedureCode_2"
+                class="formbold-form-input"
+                required
+            />
+        </div>
+    </div>
+</div>
+
+  
+          <div class="formbold-form-step-3">
+            <div class="formbold-form-confirm">
+              <p>
+                Are you sure that the data you entered is correct?
+              </p>
+  
+              <div>
+                <button class="formbold-confirm-btn active">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC"/>
+                  <g clip-path="url(#clip0_1667_1314)">
+                  <path d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z" fill="#536387"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_1667_1314">
+                  <rect width="14" height="14" fill="white" transform="translate(4 4)"/>
+                  </clipPath>
+                  </defs>
+                  </svg>
+                  Yes! 
+                </button>
+  
+                <button class="formbold-confirm-btn">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC"/>
+                  <g clip-path="url(#clip0_1667_1314)">
+                  <path d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z" fill="#536387"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_1667_1314">
+                  <rect width="14" height="14" fill="white" transform="translate(4 4)"/>
+                  </clipPath>
+                  </defs>
+                  </svg>
+                  No! 
+                </button>
+              </div>
+            </div>
+          </div>
+  
+          <div class="formbold-form-btn-wrapper">
+            <button class="formbold-back-btn">
+              Back
+            </button>
+  
+            <button class="formbold-btn">
+                Next 
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1675_1807)">
+                <path d="M10.7814 7.33312L7.20541 3.75712L8.14808 2.81445L13.3334 7.99979L8.14808 13.1851L7.20541 12.2425L10.7814 8.66645H2.66675V7.33312H10.7814Z" fill="white"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_1675_1807">
+                <rect width="16" height="16" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
+  <div class="loading-modal" style="display: none;">
+    <div class="loading-spinner"></div>
+    <p>Loading...</p>
+  </div>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Inter", sans-serif;
+    }
+    .formbold-main-wrapper {
+        background-color: #f8f7f6;
+      /* display: flex; */
+      /* align-items: center; */
+      /* justify-content: center; */
+      padding: 48px;
+    }
+    .formbold-form-title {
+    margin-bottom: 30px;
+  }
+    .formbold-form-wrapper {
+      margin: 0 auto;
+      max-width: 1500px;
+      width: 100%;
+      background-color: #f8f7f6;
+      background: #f8f7f6;
+    }
+    .h2 {
+      margin-bottom: 10px;
+    }
+  
+    .formbold-steps {
+      padding-bottom: 18px;
+      margin-bottom: 35px;
+      border-bottom: 1px solid #DDE3EC;
+    }
+    .formbold-steps ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+    .formbold-steps li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #536387;
+    }
+    .formbold-steps li span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #DDE3EC;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #536387;
+    }
+    .formbold-steps li.active {
+      color: #07074D;;
+    }
+    .formbold-steps li.active span {
+      background: #6A64F1;
+      color: #FFFFFF;
+    }
+  
+    .formbold-input-flex {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+    .formbold-input-flex > div {
+      width: 50%;
+    }
+    .formbold-form-input {
+      width: 100%;
+      padding: 13px 22px;
+      border-radius: 5px;
+      border: 1px solid #DDE3EC;
+      background: #FFFFFF;
+      font-weight: 500;
+      font-size: 16px;
+      color: #536387;
+      outline: none;
+      resize: none;
+    }
+    .formbold-form-input:focus {
+      border-color: #6a64f1;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+    .formbold-form-label {
+      color: #07074D;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 24px;
+      display: block;
+      margin-bottom: 10px;
+    }
+  
+    .formbold-form-confirm {
+      border-bottom: 1px solid #DDE3EC;
+      padding-bottom: 35px;
+    }
+    .formbold-form-confirm p {
+      font-size: 16px;
+      line-height: 24px;
+      color: #536387;
+      margin-bottom: 22px;
+      width: 75%;
+    }
+    .formbold-form-confirm > div {
+      display: flex;
+      gap: 15px;
+    }
+  
+    .formbold-confirm-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 0.5px solid #DDE3EC;
+      border-radius: 5px;
+      font-size: 16px;
+      line-height: 24px;
+      color: #536387;
+      cursor: pointer;
+      padding: 10px 20px;
+      transition: all .3s ease-in-out;
+    }
+    .formbold-confirm-btn {
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
+    }
+    .formbold-confirm-btn.active {
+      background: #6A64F1;
+      color: #FFFFFF;
+    }
+  
+    .formbold-form-step-1,
+    .formbold-form-step-2,
+    .formbold-form-step-3 {
+      display: none;
+    }
+    .formbold-form-step-1.active,
+    .formbold-form-step-2.active,
+    .formbold-form-step-3.active {
+      display: block;
+    }
+  
+    .formbold-form-btn-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 25px;
+      margin-top: 25px;
+    }
+    .formbold-back-btn {
+      cursor: pointer;
+      background: #FFFFFF;
+      border: none;
+      color: #07074D;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      display: none;
+    }
+    .formbold-back-btn.active {
+      display: block;
+    }
+    .formbold-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 16px;
+      border-radius: 5px;
+      padding: 10px 25px;
+      border: none;
+      font-weight: 500;
+      background-color: #6A64F1;
+      color: white;
+      cursor: pointer;
+    }
+    .formbold-btn:hover {
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+    .loading-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loading-spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const stepMenuOne = document.querySelector('.formbold-step-menu1');
+      const stepMenuTwo = document.querySelector('.formbold-step-menu2');
+      const stepMenuThree = document.querySelector('.formbold-step-menu3');
+
+      const stepOne = document.querySelector('.formbold-form-step-1');
+      const stepTwo = document.querySelector('.formbold-form-step-2');
+      const stepThree = document.querySelector('.formbold-form-step-3');
+
+      const formSubmitBtn = document.querySelector('.formbold-btn');
+      const formBackBtn = document.querySelector('.formbold-back-btn');
+      const loadingModal = document.querySelector('.loading-modal');
+
+      formSubmitBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // Show loading modal
+          // Your existing code for form submission
+          if (stepMenuOne.classList.contains('active')) {
+            // ... Your logic for step 1
+            stepMenuOne.classList.remove('active');
+            stepMenuTwo.classList.add('active');
+            stepOne.classList.remove('active');
+            stepTwo.classList.add('active');
+            formBackBtn.classList.add('active');
+          } else if (stepMenuTwo.classList.contains('active')) {
+            // ... Your logic for step 2
+            stepMenuTwo.classList.remove('active');
+            stepMenuThree.classList.add('active');
+            stepTwo.classList.remove('active');
+            stepThree.classList.add('active');
+            formBackBtn.classList.remove('active');
+            formSubmitBtn.textContent = 'Check Fraud';
+          } else if (stepMenuThree.classList.contains('active')) {
+            loadingModal.style.display = 'flex';
+            setTimeout(function() {
+            // ... Your logic for step 3
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add('message-container');
+            const messageText = document.createElement('p');
+            messageText.textContent = 'Potential fraud: Yes';
+            messageContainer.appendChild(messageText);
+            document.body.appendChild(messageContainer);
+            loadingModal.style.display = 'none';
+            }, 7000);
+          }
+      });
+    });
+  </script>
+
+
+</body>
+
+</html>

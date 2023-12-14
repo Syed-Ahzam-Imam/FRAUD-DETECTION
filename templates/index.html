@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<!--From https://codepen.io/frytyler/pen/EGdtg-->
+
 
 <head>
   <meta charset="UTF-8">
@@ -16,7 +16,7 @@
           Fill out the insurance claim details to detect Insurance Fraud
         </p>
       </div>
-      <form action="http://127.0.0.1:5000/predict" method="POST">
+      <form action="http://127.0.0.1:5000/predict"  id="1" method="POST">
           <div class="formbold-steps">
               <ul>
                   <li class="formbold-step-menu1 active">
@@ -40,6 +40,7 @@
                     <input
                         type="text"
                         name="BeneID"
+                        value=""
                         placeholder="Enter Beneficiary ID"
                         id="BeneID"
                         class="formbold-form-input"
@@ -116,7 +117,7 @@
                     />
                 </div>
                 <div>
-                    <label for="County" class="formbold-form-label">County</label>
+                    <label for="County" class="formbold-form-label">Country</label>
                     <input
                         type="text"
                         name="County"
@@ -127,7 +128,7 @@
                     />
                 </div>
                 <div>
-                    <label for="NoOfMonths_PartACov" class="formbold-form-label">Number of Months Part A Coverage</label>
+                    <label for="NoOfMonths_PartACov" class="formbold-form-label">No of Months Part A Coverage</label>
                     <input
                         type="text"
                         name="NoOfMonths_PartACov"
@@ -138,7 +139,7 @@
                     />
                 </div>
                 <div>
-                    <label for="NoOfMonths_PartBCov" class="formbold-form-label">Number of Months Part B Coverage</label>
+                    <label for="NoOfMonths_PartBCov" class="formbold-form-label">No of Months Part B Coverage</label>
                     <input
                         type="text"
                         name="NoOfMonths_PartBCov"
@@ -196,7 +197,7 @@
                     />
                 </div>
                 <div>
-                    <label for="ChronicCond_ObstrPulmonary" class="formbold-form-label">Chronic Condition: Obstructive Pulmonary</label>
+                    <label for="ChronicCond_ObstrPulmonary" class="formbold-form-label">Chronic Condition: Pulmonary</label>
                     <input
                         type="text"
                         name="ChronicCond_ObstrPulmonary"
@@ -254,7 +255,7 @@
                     />
                 </div>
                 <div>
-                    <label for="ChronicCond_rheumatoidarthritis" class="formbold-form-label">Chronic Condition: Rheumatoid Arthritis</label>
+                    <label for="ChronicCond_rheumatoidarthritis" class="formbold-form-label">Chronic Condition: Arthritis</label>
                     <input
                         type="text"
                         name="ChronicCond_rheumatoidarthritis"
@@ -276,7 +277,7 @@
                     />
                 </div>
                 <div>
-                    <label for="IPAnnualReimbursementAmt" class="formbold-form-label">Inpatient Annual Reimbursement Amount</label>
+                    <label for="IPAnnualReimbursementAmt" class="formbold-form-label">Inpatient Annual Reimbursement</label>
                     <input
                         type="text"
                         name="IPAnnualReimbursementAmt"
@@ -287,7 +288,7 @@
                     />
                 </div>
                 <div>
-                    <label for="IPAnnualDeductibleAmt" class="formbold-form-label">Inpatient Annual Deductible Amount</label>
+                    <label for="IPAnnualDeductibleAmt" class="formbold-form-label">Inpatient Annual Deductible</label>
                     <input
                         type="text"
                         name="IPAnnualDeductibleAmt"
@@ -298,7 +299,7 @@
                     />
                 </div>
                 <div>
-                    <label for="OPAnnualReimbursementAmt" class="formbold-form-label">Outpatient Annual Reimbursement Amount</label>
+                    <label for="OPAnnualReimbursementAmt" class="formbold-form-label">Outpatient Annual Reimbursement</label>
                     <input
                         type="text"
                         name="OPAnnualReimbursementAmt"
@@ -312,7 +313,7 @@
         
             <div class="formbold-input-flex">
                 <div>
-                    <label for="OPAnnualDeductibleAmt" class="formbold-form-label">Outpatient Annual Deductible Amount</label>
+                    <label for="OPAnnualDeductibleAmt" class="formbold-form-label">Outpatient Annual Deductible</label>
                     <input
                         type="text"
                         name="OPAnnualDeductibleAmt"
@@ -641,56 +642,6 @@
             />
         </div>
     </div>
-
-    <div class="formbold-input-flex">
-        <div>
-            <label for="ClmProcedureCode_3" class="formbold-form-label">Claim Procedure Code 3</label>
-            <input
-                type="text"
-                name="ClmProcedureCode_3"
-                placeholder="Enter Claim Procedure Code 3"
-                id="ClmProcedureCode_3"
-                class="formbold-form-input"
-                required
-            />
-        </div>
-        <div>
-            <label for="ClmProcedureCode_4" class="formbold-form-label">Claim Procedure Code 4</label>
-            <input
-                type="text"
-                name="ClmProcedureCode_4"
-                placeholder="Enter Claim Procedure Code 4"
-                id="ClmProcedureCode_4"
-                class="formbold-form-input"
-                required
-            />
-        </div>
-    </div>
-
-    <div class="formbold-input-flex">
-        <div>
-            <label for="ClmProcedureCode_5" class="formbold-form-label">Claim Procedure Code 5</label>
-            <input
-                type="text"
-                name="ClmProcedureCode_5"
-                placeholder="Enter Claim Procedure Code 5"
-                id="ClmProcedureCode_5"
-                class="formbold-form-input"
-                required
-            />
-        </div>
-        <div>
-            <label for="ClmProcedureCode_6" class="formbold-form-label">Claim Procedure Code 6</label>
-            <input
-                type="text"
-                name="ClmProcedureCode_6"
-                placeholder="Enter Claim Procedure Code 6"
-                id="ClmProcedureCode_6"
-                class="formbold-form-input"
-                required
-            />
-        </div>
-    </div>
 </div>
 
   
@@ -771,6 +722,7 @@
       font-family: "Inter", sans-serif;
     }
     .formbold-main-wrapper {
+        background-color: #f8f7f6;
       /* display: flex; */
       /* align-items: center; */
       /* justify-content: center; */
@@ -783,7 +735,8 @@
       margin: 0 auto;
       max-width: 1500px;
       width: 100%;
-      background: white;
+      background-color: #f8f7f6;
+      background: #f8f7f6;
     }
     .h2 {
       margin-bottom: 10px;
@@ -1019,16 +972,14 @@
             const messageContainer = document.createElement('div');
             messageContainer.classList.add('message-container');
             const messageText = document.createElement('p');
-            messageText.textContent = 'Potential fraud: No';
+            messageText.textContent = 'Incomplete Data, Please fill in all the required Fields';
             messageContainer.appendChild(messageText);
             document.body.appendChild(messageContainer);
             loadingModal.style.display = 'none';
-            }, 5000);
+            }, 7000);
           }
       });
     });
-   
-
   </script>
 
 

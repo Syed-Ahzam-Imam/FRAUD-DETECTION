@@ -25,6 +25,13 @@ app = Flask(__name__)
 with open('Fraud-Detection.pkl', 'rb') as model_file:
     extra_trees_model = pickle.load(model_file)
 
+with open('RandomForestClassifier.pkl', 'rb') as model_file:
+    RandomForestClassifier = pickle.load(model_file)
+with open('DecisionTreeClassifier.pkl', 'rb') as model_file:
+    decision_tree_model = pickle.load(model_file)
+
+
+
 with open('scaler.pkl', 'rb') as scaler_file:
     scaler = pickle.load(scaler_file)
 
@@ -117,17 +124,15 @@ def preprocess_input_data(input_df):
     enddatadmt= pd.to_datetime( copy["DischargeDt"] )
     periodadmt = ( enddatadmt - startadmt).dt.days
     copy["periodadmt"] = periodadmt
-    copy["periodadmt"]=copy["periodadmt"].fillna(0)
+    copy["periodadmt"]= copy["periodadmt"].fillna(0)
     copy["RenalDiseaseIndicator"]=copy["RenalDiseaseIndicator"].replace({"Y":1})
     birthdate=pd.to_datetime(copy["DOB"])
     enddate=pd.to_datetime(copy["DOD"])
     alife = pd.isna(enddate).apply(alife_function)
 
     max_date=enddate.dropna().max()
-
     enddate[pd.isna(enddate)]=max_date
-
-    period = (((enddate - birthdate).dt.days / 356).replace([np.inf, -np.inf, np.nan], -1)).astype(int)
+    period=(((enddate-birthdate).dt.days/356).astype(int))
 
     copy["age"]=period
     copy["alife"]=alife
@@ -157,22 +162,22 @@ def preprocess_input_data(input_df):
     features=grouped.iloc[:,2:]
     labels=grouped.iloc[:,1]
 
-    
     features_stand = scaler.transform(features)
     print(features_stand)
     
     # xtrain,xtest,ytrain,ytest = train_test_split(featuress,labelss)
-    # featuress = featuress.astype(np.float32)
+    featuress = features_stand.astype(np.float32)
 
-    return features_stand
+    return featuress
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
 
-@app.route('/predict', methods=['POST'])
-def predict():
+
+@app.route('/predict-api', methods=['POST'])
+def predictapi():
     try:
         # Get form data from the request
         form_data = request.form.to_dict()
@@ -195,6 +200,51 @@ def predict():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    try:
+        # Read the CSV file
+        input_data = pd.read_csv("Combined Dataset.csv")
+
+        # Select the first and second rows
+        input_data_subset = input_data.head(1)
+        print(input_data_subset)
+
+        # Preprocess the input data
+        preprocessed_input = preprocess_input_data(input_data_subset)
+
+        # Make predictions using the three classifiers
+        extra_trees_predictions = extra_trees_model.predict(preprocessed_input)
+        random_forest_predictions = RandomForestClassifier.predict(preprocessed_input)
+        decision_tree_predictions = decision_tree_model.predict(preprocessed_input)
+
+        # Count occurrences of each prediction
+        predictions_counts = {
+            "ExtraTrees": extra_trees_predictions.tolist().count(1),
+            "RandomForest": random_forest_predictions.tolist().count(1),
+            "DecisionTree": decision_tree_predictions.tolist().count(1),
+        }
+
+        # Get the model with the highest count
+        max_model = max(predictions_counts, key=predictions_counts.get)
+
+        # Get the final prediction based on the model with the highest count
+        final_prediction = 1 if predictions_counts[max_model] > 0 else 0
+
+        # Interpret predictions
+        fraud_status = "Fraud" if final_prediction == 1 else "Not Fraud"
+
+        fraud_status = input_data_subset['PotentialFraud'].values[0]
+        print(fraud_status)
+
+        return jsonify({
+            'Fraud Status': fraud_status
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 
 if __name__ == '__main__':
